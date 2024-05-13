@@ -1,6 +1,7 @@
 <?php
 
 require_once 'classes/Pasajero.php';
+
 class PasajerosService {
 
     /**
@@ -24,17 +25,19 @@ class PasajerosService {
             // Convertir la respuesta JSON a un array de objetos Pasajero
             $pasajerosData = json_decode($res, true);
 
-            // Crear un array para almacenar los objetos Pasajero
-            $pasajeros = [];
+            if ($pasajerosData != null) {
+                // Crear un array para almacenar los objetos Pasajero
+                $pasajeros = [];
+                // Recorrer los datos de los pasajeros y crear objetos Pasajero
+                foreach ($pasajerosData as $pasajeroData) {
+                    $pasajero = new Pasajero($pasajeroData);
+                    $pasajeros[] = $pasajero;
+                }
 
-            // Recorrer los datos de los pasajeros y crear objetos Pasajero
-            foreach ($pasajerosData as $pasajeroData) {
-                $pasajero = new Pasajero($pasajeroData);
-                $pasajeros[] = $pasajero;
+                return $pasajeros;
             }
-
-            return $pasajeros;
         } else {
+
             return false;
         }
     }

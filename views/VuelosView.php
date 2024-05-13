@@ -3,6 +3,7 @@
 include_once './Services/classes/Vuelo.php';
 
 class VuelosView {
+
     /**
      * Muestra todos los vuelos en una tabla.
      *
@@ -27,7 +28,7 @@ class VuelosView {
 
         echo "</table>";
     }
-    
+
     /**
      * Muestra un botón para volver al menú principal.
      *
@@ -38,6 +39,13 @@ class VuelosView {
         echo "<button class='volver-btn'>Volver al Menu</button>";
         echo "</form>";
     }
+
+    /**
+     * Muestra los mensajes devueltos
+     * 
+     * @param type $mensaje
+     */
+    public function mostrarMensaje($mensaje) {
+        echo "<h2>. $mensaje . </h2>";
+    }
 }
-
-

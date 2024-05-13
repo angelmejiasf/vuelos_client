@@ -32,7 +32,9 @@ class VuelosController {
             $this->view->mostrarTodosLosVuelos($vuelos);
             $this->view->volverMenu();
         } else {
-            echo 'Error: No se pudieron obtener los datos de los vuelos.';
+            $mensaje= 'Error: No se pudieron obtener los datos de los vuelos.';
+            $this->view->mostrarMensaje($mensaje);
+            $this->view->volverMenu();
         }
     }
     

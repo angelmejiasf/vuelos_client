@@ -54,6 +54,82 @@ class PasajeView {
         echo "<button class='volver-btn'>Volver al Menu</button>";
         echo "</form>";
     }
+
+    public function volveraPasajes() {
+        echo '<form action="index.php?controller=Pasaje&action=mostrarPasajes" method="post">';
+        echo "<button class='volver-btn'>Volver a Pasajes</button>";
+        echo "</form>";
+    }
+
+    /**
+     * Muestra los mensajes devueltos
+     * 
+     * @param type $mensaje
+     */
+    public function mostrarMensaje($mensaje) {
+        echo "<h2>. $mensaje . </h2>";
+    }
+
+    public function mostrarPasajes($pasajes) {
+        echo "<h2>Pasajes</h2>";
+        echo "<table border='1' >";
+        echo "<tr><th>ID Pasaje</th><th>ID Pasajero</th><th>Identificador</th><th>Asiento</th><th>Clase</th><th>PVP</th><th>Acciones</th></tr>";
+
+        foreach ($pasajes as $pasaje) {
+            echo "<tr>";
+            echo "<td>{$pasaje->getIdPasaje()}</td>";
+            echo "<td>{$pasaje->getPasajeroCod()}</td>";
+            echo "<td>{$pasaje->getIdentificador()}</td>";
+            echo "<td>{$pasaje->getNumAsiento()}</td>";
+            echo "<td>{$pasaje->getClase()}</td>";
+            echo "<td>{$pasaje->getPVP()}</td>";
+            echo "<td>";
+            echo "<form action='index.php?controller=Pasaje&action=eliminarPasaje' method='post'>";
+            echo "<input type='hidden' name='id_pasaje' value='{$pasaje->getIdPasaje()}'>";
+            echo "<input type='submit' name='eliminar_pasaje' value='Eliminar'>";
+            echo "</form>";
+            echo "</td>";
+            echo "<td>";
+            echo "<form action='index.php?controller=Pasaje&action=mostrarFormActualizacion' method='post'>";
+            echo "<input type='hidden' name='id_pasaje' value='{$pasaje->getIdPasaje()}'>";
+            echo "<input type='submit' name='actualizar_pasaje' value='Actualizar'>";
+            echo "</form>";
+            echo "</td>";
+            echo "</tr>";
+        }
+
+        echo "</table>";
+    }
+
+    /**
+     * Muestra el formulario de actualización de un pasaje, permitiendo seleccionar el vuelo y actualizar los demás datos del pasaje.
+     *
+     * @param object $pasaje El objeto del pasaje que se va a actualizar.
+     * @param array $vuelos Un array de objetos de vuelo para mostrar en el select.
+     * @return void
+     */
+    public function mostrarFormActualizacion($pasaje, $vuelos) {
+        echo "<form action='index.php?controller=Pasaje&action=actualizarPasaje' method='post' class='pasaje-form'>";
+        echo "<input type='hidden' name='id_pasaje' value='{$pasaje->getIdPasaje()}'>";
+        echo "<input type='hidden' name='pasajerocod' value='{$pasaje->getPasajeroCod()}'>";
+
+        echo "<label class='clase-label'>Selecciona el vuelo</label><br>";
+        echo "<select name='identificador'>";
+        foreach ($vuelos as $vuelo) {
+
+            echo "<option value='{$vuelo->getIdentificador()}'>{$vuelo->getIdentificador()}</option>";
+        }
+        echo "</select><br>";
+
+        echo "<label class='clase-label'>Selecciona el asiento</label><br>";
+        echo "<input type='text' name='asiento' value='{$pasaje->getNumAsiento()}'><br>";
+        echo "<label class='clase-label'>Selecciona la clase</label><br>";
+        echo "<input type='text' name='clase' value='{$pasaje->getClase()}'><br>";
+        echo "<label class='clase-label'>Selecciona el precio</label><br>";
+        echo "<input type='text' name='pvp' value='{$pasaje->getPVP()}'><br>";
+        echo "<input type='submit' name='actualizar_pasaje' value='Actualizar' class='submit-btn'>";
+        echo "</form>";
+    }
 }
 
 ?>
